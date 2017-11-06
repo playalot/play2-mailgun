@@ -1,10 +1,8 @@
-package com.themillhousegroup.play2.mailgun
+package cn.playalot.play2.mailgun
 
+import cn.playalot.play2.mailgun.utils.DualFormatMarkup
+import cn.playalot.play2.mailgun.utils.DualFormatMarkup.str2NodeSeq
 import org.specs2.mutable.Specification
-import com.themillhousegroup.play2.mailgun.utils.DualFormatMarkup._
-import play.twirl.api.Html
-import com.themillhousegroup.play2.mailgun.utils.DualFormatMarkup
-import scala.xml.NodeSeq
 
 class DualFormatMarkupSpec extends Specification {
   "Dual Format helpers" should {

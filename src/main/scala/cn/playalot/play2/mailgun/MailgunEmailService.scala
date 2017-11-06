@@ -1,35 +1,30 @@
-package com.themillhousegroup.play2.mailgun
+package cn.playalot.play2.mailgun
 
-import java.io.File
-
-import akka.stream.scaladsl.{ FileIO, Source }
-import play.api.libs.concurrent.Execution.Implicits._
-import play.api.mvc.MultipartFormData.{ DataPart, FilePart, Part }
-import play.api.Play
-import play.api.Logger
-
-import scala.concurrent.Future
-import play.api._
-import play.api.http._
-import play.api.libs.ws._
-import play.api.Play.current
 import javax.inject.Inject
 
+import akka.stream.scaladsl.{ FileIO, Source }
 import akka.util.ByteString
-import com.themillhousegroup.play2.mailgun.MailgunEmailService.AttachmentPartType
+import cn.playalot.play2.mailgun.MailgunEmailService.AttachmentPartType
+import play.api.{ Configuration, Logger }
+import play.api.http.Status
+import play.api.libs.ws.{ WSAuthScheme, WSClient, WSRequest, WSResponse }
 import play.api.mvc.MultipartFormData
+import play.api.mvc.MultipartFormData.{ DataPart, FilePart, Part }
+
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 /** For static-style usage: */
-object MailgunEmailService extends MailgunEmailService(WS.client, Play.current.configuration) {
+object MailgunEmailService {
   type AttachmentPartType = Source[ByteString, Any]
   type PostData = Source[MultipartFormData.Part[AttachmentPartType], _]
 }
 
 class MailgunEmailService @Inject() (wsClient: WSClient, configuration: Configuration) extends MailgunResponseJson {
 
-  lazy val mailgunApiKey: String = configuration.getString("mailgun.api.key").get
-  lazy val defaultSender: Option[String] = configuration.getString("mailgun.default.sender")
-  lazy val mailgunUrl: String = configuration.getString("mailgun.api.url").get
+  lazy val mailgunApiKey: String = configuration.get[String]("mailgun.api.key")
+  lazy val defaultSender: Option[String] = configuration.getOptional[String]("mailgun.default.sender")
+  lazy val mailgunUrl: String = configuration.get[String]("mailgun.api.url")
   lazy val ws: WSRequest = wsClient.url(mailgunUrl)
 
   /** Sends the message via Mailgun's API, respecting any options provided */
@@ -39,8 +34,7 @@ class MailgunEmailService @Inject() (wsClient: WSClient, configuration: Configur
     } else {
       val sender = message.from.getOrElse(defaultSender.get)
 
-      ws
-        .withAuth("api", mailgunApiKey, WSAuthScheme.BASIC)
+      ws.withAuth("api", mailgunApiKey, WSAuthScheme.BASIC)
         .post(buildMultipartRequest(sender, message, options))
         .flatMap(handleMailgunResponse)
     }
@@ -92,7 +86,7 @@ class MailgunEmailService @Inject() (wsClient: WSClient, configuration: Configur
       Future.failed(
         response.status match {
           case Status.UNAUTHORIZED => new MailgunAuthenticationException((response.json \ "message").as[String])
-          case _ => new MailgunSendingException((response.json \ "message").as[String])
+          case _                   => new MailgunSendingException((response.json \ "message").as[String])
         }
       )
     }

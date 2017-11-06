@@ -1,6 +1,7 @@
-package com.themillhousegroup.play2.mailgun.templating
+package cn.playalot.play2.mailgun.templating
 
-import org.specs2.mutable.Specification 
+import cn.playalot.play2.mailgun.templating.DualFormatEmail
+import org.specs2.mutable.Specification
 
 class DualFormatEmailSpec extends Specification {
 	"Dual-Format emails" should {

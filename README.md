@@ -7,7 +7,7 @@ Features:
   - Super-easy to wire in (just add two values to `application.conf`)
   - Send plain-text and/or HTML emails _with the one Twirl template_ (not finished yet)
 
-[![Build Status](https://travis-ci.org/themillhousegroup/play2-mailgun.svg?branch=master)](https://travis-ci.org/themillhousegroup/play2-mailgun)
+[![Build Status](https://travis-ci.org/playalot/play2-mailgun.svg?branch=master)](https://travis-ci.org/playalot/play2-mailgun)
 
 
 
@@ -24,7 +24,7 @@ Add the following to your ```build.sbt```:
 ```
 
 #### Pick the right version for your Play app
-There are versions available for Play 2.3 to 2.5. 
+There are versions available for Play 2.3 to 2.5.
 
 If you are on Play 2.5, you'll need to use the latest from the `0.3.x` family, as shown below:
 
@@ -73,7 +73,7 @@ val m = EmailMessage(
 ```
 
 ##### Sender addressing
-You might have noticed the first argument to `EmailMessage` was `Some("sender@example.com")` - 
+You might have noticed the first argument to `EmailMessage` was `Some("sender@example.com")` -
 if you want emails to come from different senders depending on context, you should pass the sender's
 email address in like this.
 
@@ -93,7 +93,7 @@ It returns a `Future[MailgunResponse]` (which you can ignore if you don't care):
 ##### Play 2.3 static-object style:
 
 ```
-import com.themillhousegroup.play2.mailgun.MailgunEmailService
+import cn.playalot.play2.mailgun.MailgunEmailService
 
 ...
 
@@ -107,7 +107,7 @@ MailgunEmailService.send(m).map { mailgunResponse =>
 ```
 import play.api.mvc._
 import com.google.inject.Inject
-import com.themillhousegroup.play2.mailgun.MailgunEmailService
+import cn.playalot.play2.mailgun.MailgunEmailService
 
 class MyController @Inject() (val emailService:MailgunEmailService) extends Controller  {
 
@@ -169,7 +169,7 @@ val replyToEmail = MulticastEmailMessage(
 Use one custom template (with `.scala.email` extension) to define both plain text and HTML message bodies.
 
 ### Credits / References
-- [MailGun](http://www.mailgun.com/) 
+- [MailGun](http://www.mailgun.com/)
 - [This Issue in Play](https://github.com/playframework/playframework/issues/902)
 - [This Stack Overflow question](http://stackoverflow.com/questions/10890362/play-2-0-how-to-post-multipartformdata-using-ws-url-or-ws-wsrequest)
 - [Play Custom Template Formats](https://www.playframework.com/documentation/2.3.x/ScalaCustomTemplateFormat)

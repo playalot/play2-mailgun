@@ -1,4 +1,4 @@
-package com.themillhousegroup.play2.mailgun
+package cn.playalot.play2.mailgun
 
 import play.api.mvc.MultipartFormData.DataPart
 

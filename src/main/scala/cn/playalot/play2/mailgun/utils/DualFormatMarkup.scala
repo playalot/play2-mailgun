@@ -1,7 +1,6 @@
-package com.themillhousegroup.play2.mailgun.utils
+package cn.playalot.play2.mailgun.utils
 
-import scala.xml.{ NodeSeq, Node, Text }
-import play.twirl.api.{ HtmlFormat, Html, Content }
+import scala.xml.{ NodeSeq, Text }
 
 object DualFormatMarkup {
 

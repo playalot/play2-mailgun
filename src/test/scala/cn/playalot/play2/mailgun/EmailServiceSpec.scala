@@ -1,26 +1,19 @@
-package com.themillhousegroup.play2.mailgun
+package cn.playalot.play2.mailgun
 
-import akka.stream.scaladsl.Source
-import akka.util.ByteString
 import org.specs2.mutable._
 import org.specs2.mock.Mockito
 import org.mockito.ArgumentCaptor
-import play.twirl.api.Html
-import play.api.libs.ws._
-import play.api._
-import play.api.http._
-import play.api.libs.json._
 
 import scala.concurrent.Future
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 import org.apache.commons.fileupload.disk._
 
-import scala.Predef._
-import scala.Some
 import org.apache.commons.fileupload.{ FileItem, FileUpload, UploadContext }
-import play.api.mvc.MultipartFormData
-import play.api.mvc.MultipartFormData.DataPart
+import play.api.Configuration
+import play.api.libs.json.Json
+import play.api.libs.ws._
+import play.twirl.api.Html
 
 class EmailServiceSpec extends Specification with Mockito {
 

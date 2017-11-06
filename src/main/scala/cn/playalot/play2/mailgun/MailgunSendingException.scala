@@ -1,4 +1,4 @@
-package com.themillhousegroup.play2.mailgun
+package cn.playalot.play2.mailgun
 
 /**
  * Represents a problem returned by the Mailgun sending API
