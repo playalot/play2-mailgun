@@ -32,27 +32,14 @@ lazy val publishSettings = Seq(
     else
       Some("releases"  at nexus + "service/local/staging/deploy/maven2")
   },
-  pomExtra :=
-    <url>http://github.com/playalot/play2-mailgun</url>
-      <licenses>
-        <license>
-          <name>Apache 2</name>
-          <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-          <distribution>repo</distribution>
-        </license>
-      </licenses>
-      <scm>
-        <url>github.com:playalot/play2-mailgun.git</url>
-        <connection>scm:git:github.com:playalot/play2-mailgun.git</connection>
-      </scm>
-      <developers>
-        <developer>
-          <id>gguan</id>
-          <name>Guan Guan</name>
-          <url>http://github.com/gguan</url>
-        </developer>
-      </developers>)
-
+  licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
+  scmInfo := Some(
+    ScmInfo(
+      url("https://github.com/playalot/play2-mailgun"),
+      "scm:git@github.com:playalot/play2-mailgun.git"
+    )
+  )
+)
 
 
 lazy val root = project.in(file(".")).settings(commonSettings:_*).settings(publishSettings: _*)
@@ -66,7 +53,9 @@ resolvers ++= Seq(
 
 publishArtifact in (Compile, packageDoc) := false
 
-licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
+developers := List(
+  Developer(id="gguan", name="Guan Guan", email="guanguan1114@gmail.com", url=url("http://github.com/gguan"))
+)
 
 scalariformPreferences := scalariformPreferences.value
     .setPreference(AlignSingleLineCaseStatements, true)
